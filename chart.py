@@ -9,10 +9,11 @@ from config import ameritrade, points
 import pickle as pkl
 import tools
 from pprint import pprint
+from models import Equity
 
 
 
-def chart(ticker, graph=False):
+def chart(ticker):
     ticker = ticker.upper()
 
 
@@ -48,17 +49,6 @@ def chart(ticker, graph=False):
     dict = {'chart': df, 'fundamental': fd}
     return dict
 
-    if graph == True:
-        plt.figure(figsize=[16, 8 ])
-        plt.plot(df['close'], label=ticker)
-        plt.plot(df['MA10'], label='MA10')
-        plt.plot(df['MA20'], label='MA20')
-        plt.legend()
-
-    plt.savefig(f'{ticker}.png')
-
-
-
 
 def fetch_analysis(file):
     tickers = tools.retrieve_tickers(file)
@@ -93,9 +83,21 @@ def fetch_analysis(file):
                 data.append(tick)
                 os.remove(file)
     df = pd.DataFrame(data, columns=points)
+    
     return df
 
-if __name__ == '__main__':
-    i = input('What ticker?\n')
-    pprint(chart(i, fundamental=True))
-    pprint(chart(i, graph=True))
+def plot(dataframe, title):
+    plt.figure(figsize=[16, 8])
+    plt.plot(dataframe['close'], label=title)
+    plt.plot(dataframe['MA10'], label='MA10')
+    plt.plot(dataframe['MA20'], label='MA20')
+    plt.ylabel('Price')
+    plt.xlabel('Date')
+    plt.legend()
+    plt.savefig(f'{title}.png')
+    ax = plt.gca()
+    ax.axes.xaxis.set_ticks([])
+    plt.grid(True)
+    plt.show()
+
+
