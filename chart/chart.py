@@ -14,7 +14,7 @@ import math
 import numpy as np
 
 
-def chart(ticker):
+def price(ticker):
     ticker = ticker.upper()
     result = requests.get('https://api.tdameritrade.com/v1/instruments',
                           params={'apikey': ameritrade, 'symbol': ticker,
