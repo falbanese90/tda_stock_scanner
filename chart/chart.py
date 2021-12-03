@@ -12,6 +12,7 @@ import math
 import numpy as np
 
 
+
 def price(ticker):
     ticker = ticker.upper()
     result = requests.get('https://api.tdameritrade.com/v1/instruments',
@@ -20,7 +21,8 @@ def price(ticker):
     data = result.json()
     fd = data[ticker]['fundamental']
 
-    result  = requests.get(f'https://api.tdameritrade.com/v1/marketdata/{ticker}/pricehistory', params={'apikey': ameritrade, 'periodType': 'year', 'frequencyType': 'daily'})
+    result  = requests.get(f'https://api.tdameritrade.com/v1/marketdata/{ticker}/pricehistory', 
+                           params={'apikey': ameritrade, 'periodType': 'year', 'frequencyType': 'daily'})
     data = result.json()
     for n in data['candles']:
         n['datetime'] = pd.to_datetime(n['datetime'], unit='ms').strftime('%m/%d/%Y')

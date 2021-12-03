@@ -1,6 +1,7 @@
 from .chart import price, plot
 from .vol_premium import iv_prem as vol
 from .toolbox import timer
+import pandas as pd
 
 class Equity():
     @timer
@@ -13,7 +14,10 @@ class Equity():
 
     def _plot(self, save_png=False):
         plot(self.chart, self.name, save_png)
-    
+
+    def _export(self):
+            self.chart.to_csv(f'{self.name}.csv')
+
     @property
     def vol_prem(self):
         if vol(self.name.upper())['premium'] == None:
