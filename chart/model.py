@@ -9,12 +9,24 @@ class Equity():
         self.fundamental = price(ticker.upper())['fundamental']
         self.price = price(ticker.upper())['chart']['close'].iloc[-1]
         self.chart = price(ticker.upper())['chart']
-        self.vol_prem = vol(ticker.upper())['premium']
         self.hist_vol = vol(ticker.upper())['historical_vol']
-        self.iv = vol(ticker.upper())['implied_vol']
 
-    def _plot(self):
-        plot(self.chart, self.name)
+    def _plot(self, save_png=False):
+        plot(self.chart, self.name, save_png)
+    
+    @property
+    def vol_prem(self):
+        if vol(self.name.upper())['premium'] == None:
+            return str(None)
+        else:
+            return vol(self.name.upper())['premium']
+    
+    @property
+    def iv(self):
+        if vol(self.name.upper())['implied_vol'] == None:
+            return str(None)
+        else:
+            return vol(self.name.upper())['implied_vol']
 
     def __str__(self):
         return (f'{self.name}: {self.price}\n'

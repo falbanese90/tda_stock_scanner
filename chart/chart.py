@@ -55,7 +55,7 @@ def price(ticker):
     return dict
 
 
-def plot(dataframe, title):
+def plot(dataframe, title, save_png=False):
     plt.figure(figsize=[16, 8])
     plt.plot(dataframe['close'], label=title)
     plt.plot(dataframe['MA10'], label='MA10')
@@ -63,7 +63,10 @@ def plot(dataframe, title):
     plt.ylabel('Price')
     plt.xlabel('Date')
     plt.legend()
-    plt.savefig(f'{title}.png')
+    if save_png == True:
+        plt.savefig(f'{title}.png')
+    else:
+        pass
     ax = plt.gca()
     ax.axes.xaxis.set_ticks([])
     plt.grid(True)
